@@ -1,9 +1,11 @@
 import Input from "./components/Input";
+import Button from "./components/Button";
+import TravelOption from "./components/TravelOption";
 function App() {
   return (
     <>
       <div className="grid grid-cols-[450px,1fr]">
-        <aside className="bg-black flex flex-col items-center max-h-screen px-4 py-2 text-green-50">
+        <aside className="bg-black flex flex-col items-center max-h-screen p-4 text-green-50">
           <h1 className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +28,10 @@ function App() {
             </svg>
             <span className="text-2xl font-medium">Route planner</span>
           </h1>
-        <Input/>
+        <Input text="Starting point"/>
+          <Input text="Destination" />
+          <Button text="Add stop" />
+          <TravelOption/>
         </aside>
 
         <main className=""></main>

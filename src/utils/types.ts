@@ -1,3 +1,7 @@
 export type InputComponentProps = {
-    placeholder:string
+    text:string
+}
+
+export type ButtonComponentProps = {
+    text: string;
 }
