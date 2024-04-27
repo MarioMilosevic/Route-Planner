@@ -4,4 +4,5 @@ export type InputComponentProps = {
 
 export type ButtonComponentProps = {
     text: string;
+    scale:string
 }
