@@ -9,13 +9,35 @@ import {
   GoogleMap,
   MarkerF,
   Autocomplete,
+  DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const kotor = { lat: 42.4247, lng: 18.7712 };
 
 function App() {
   const [map, setMap] = useState(null);
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("");
+
+  const originRef = useRef();
+  const destinationRef = useRef();
+
+  const calculateRoute = async () => {
+    if (originRef.current.value === "" || destinationRef.current.value === "") {
+      return;
+    }
+    const directionsService = new google.maps.DirectionsService();
+    const results = await directionsService.route({
+      origin: originRef.current.value,
+      destination: destinationRef.current.value,
+      travelMode: google.maps.TravelMode.DRIVING,
+    });
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
+  };
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -28,7 +50,7 @@ function App() {
         <aside className="bg-black flex flex-col items-center max-h-screen p-4 text-green-50">
           <Title />
 
-          <Autocomplete className="w-full">
+          <Autocomplete className="w-full bg-none">
             <Input text="Starting point" />
           </Autocomplete>
           <Autocomplete className="w-full">
@@ -57,3 +79,6 @@ function App() {
 }
 
 export default App;
+
+// pocetna pozicija, distanca, vrijeme, ruta
+// 
