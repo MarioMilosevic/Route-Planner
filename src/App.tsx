@@ -3,28 +3,53 @@ import Button from "./components/Button";
 import TravelOption from "./components/TravelOption";
 import Title from "./components/Title";
 import CalculateRoute from "./components/CalculateRoute";
-import { useLoadScript, GoogleMap } from "@react-google-maps/api";
-import { useState, useEffect } from "react";
+import {
+  useLoadScript,
+  useJsApiLoader,
+  GoogleMap,
+  MarkerF,
+  Autocomplete,
+} from "@react-google-maps/api";
+import { useState } from "react";
+
+const kotor = { lat: 42.4247, lng: 18.7712 };
 
 function App() {
- 
+  const [map, setMap] = useState(null);
 
-  const { isLoaded } = useLoadScript({
+  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
+    libraries: ["places"],
   });
-  if (!isLoaded) return <h1>NIJE UCITANO</h1>;
+  if (!isLoaded) return <h1>Loading...</h1>;
   return (
     <>
       <div className="grid grid-cols-[450px,1fr]">
         <aside className="bg-black flex flex-col items-center max-h-screen p-4 text-green-50">
           <Title />
-          <Input text="Starting point" />
-          <Input text="Destination" />
+
+          <Autocomplete className="w-full">
+            <Input text="Starting point" />
+          </Autocomplete>
+          <Autocomplete className="w-full">
+            <Input text="Destination" />
+          </Autocomplete>
+
           <Button scale="big" text="Add stop" />
           <TravelOption />
           <CalculateRoute />
         </aside>
-        <main className="">
+        <main>
+          {isLoaded ? (
+            <GoogleMap
+              center={kotor}
+              zoom={10}
+              mapContainerStyle={{ width: "100%", height: "100vh" }}
+              onLoad={(map) => setMap(map)}
+            >
+              <MarkerF position={kotor} />
+            </GoogleMap>
+          ) : null}
         </main>
       </div>
     </>
