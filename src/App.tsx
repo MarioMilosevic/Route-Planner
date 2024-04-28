@@ -3,50 +3,52 @@ import Button from "./components/Button";
 import TravelOption from "./components/TravelOption";
 import Title from "./components/Title";
 import CalculateRoute from "./components/CalculateRoute";
+import { useDispatch } from "react-redux";
+import { usePositionSlice } from "./hooks/usePositionSlice";
+import { setPosition } from "./redux/features/positionSlice/positionSlice";
 import {
   useJsApiLoader,
   GoogleMap,
   MarkerF,
   Autocomplete,
-//   DirectionsRenderer,
+  Libraries,
+  //   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useState, useEffect } from "react";
-const libraries = ["places"]
+import { useEffect } from "react";
+const libraries: Libraries = ["places"];
 
 function App() {
- const [currentPosition, setCurrentPosition] = useState({ lat: 0, lng: 0 });
+  const currentPosition = usePositionSlice();
+  const dispatch = useDispatch();
 
- useEffect(() => {
-   if ("geolocation" in navigator) {
-       navigator.geolocation.getCurrentPosition(function (position) {
-         console.log(position)
-       setCurrentPosition({
-         lat: position.coords.latitude,
-         lng: position.coords.longitude,
-       });
-     });
-   } else {
-     console.log("Geolocation is not available in your browser.");
-   }
- }, []);    
-
-
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const { latitude, longitude } = position.coords;
+        dispatch(
+          setPosition({
+            lat: latitude,
+            lng: longitude,
+          })
+        );
+      });
+    } else {
+      console.log("Geolocation is not available in your browser.");
+    }
+  }, [dispatch]);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
-    libraries: libraries,
+    libraries,
   });
 
+  if (!isLoaded) return <h1>Loading...</h1>;
 
-
-    if (!isLoaded) return <h1>Loading...</h1>;
-    console.log(currentPosition)
   return (
     <>
       <div className="grid grid-cols-[450px,1fr]">
         <aside className="bg-black flex flex-col items-center max-h-screen p-4 text-green-50">
           <Title />
-
           <Autocomplete className="w-full bg-none">
             <Input text="Starting point" />
           </Autocomplete>
@@ -69,7 +71,7 @@ function App() {
             </GoogleMap>
           ) : null}
         </main>
-          </div>
+      </div>
     </>
   );
 }
