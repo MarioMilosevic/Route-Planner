@@ -1,4 +1,4 @@
-import { ButtonComponentProps } from "../utils/types";
+import { ButtonComponentProps } from "../utils/types/types";
 const Button = ({ text, scale }: ButtonComponentProps) => {
   const size =
     scale === "big"

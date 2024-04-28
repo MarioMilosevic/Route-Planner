@@ -4,45 +4,30 @@ import TravelOption from "./components/TravelOption";
 import Title from "./components/Title";
 import CalculateRoute from "./components/CalculateRoute";
 import {
-  useLoadScript,
+//   useLoadScript,
   useJsApiLoader,
   GoogleMap,
   MarkerF,
   Autocomplete,
-  DirectionsRenderer,
+//   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useRef, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 const kotor = { lat: 42.4247, lng: 18.7712 };
 
 function App() {
   const [map, setMap] = useState(null);
-  const [directionsResponse, setDirectionsResponse] = useState(null);
-  const [distance, setDistance] = useState("");
-  const [duration, setDuration] = useState("");
-
-  const originRef = useRef();
-  const destinationRef = useRef();
-
-  const calculateRoute = async () => {
-    if (originRef.current.value === "" || destinationRef.current.value === "") {
-      return;
-    }
-    const directionsService = new google.maps.DirectionsService();
-    const results = await directionsService.route({
-      origin: originRef.current.value,
-      destination: destinationRef.current.value,
-      travelMode: google.maps.TravelMode.DRIVING,
-    });
-    setDirectionsResponse(results);
-    setDistance(results.routes[0].legs[0].distance.text);
-    setDuration(results.routes[0].legs[0].duration.text);
-  };
-
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
   });
+
+  const onLoad = useCallback((map) => {
+    const bounds = new window.google.maps.LatLngBounds(kotor);
+    map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
   if (!isLoaded) return <h1>Loading...</h1>;
   return (
     <>
@@ -67,7 +52,7 @@ function App() {
               center={kotor}
               zoom={10}
               mapContainerStyle={{ width: "100%", height: "100vh" }}
-              onLoad={(map) => setMap(map)}
+              onLoad={onLoad}
             >
               <MarkerF position={kotor} />
             </GoogleMap>
@@ -79,6 +64,3 @@ function App() {
 }
 
 export default App;
-
-// pocetna pozicija, distanca, vrijeme, ruta
-// 

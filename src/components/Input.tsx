@@ -1,4 +1,4 @@
-import { InputComponentProps } from "../utils/types";
+import { InputComponentProps } from "../utils/types/types";
 const Input = ({ text }: InputComponentProps) => {
   return (
     <input
