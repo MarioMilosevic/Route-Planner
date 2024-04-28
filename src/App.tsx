@@ -4,31 +4,43 @@ import TravelOption from "./components/TravelOption";
 import Title from "./components/Title";
 import CalculateRoute from "./components/CalculateRoute";
 import {
-//   useLoadScript,
   useJsApiLoader,
   GoogleMap,
   MarkerF,
   Autocomplete,
 //   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useCallback, useState, useEffect } from "react";
-
-const kotor = { lat: 42.4247, lng: 18.7712 };
+import { useState, useEffect } from "react";
+const libraries = ["places"]
 
 function App() {
-  const [map, setMap] = useState(null);
+ const [currentPosition, setCurrentPosition] = useState({ lat: 0, lng: 0 });
+
+ useEffect(() => {
+   if ("geolocation" in navigator) {
+       navigator.geolocation.getCurrentPosition(function (position) {
+         console.log(position)
+       setCurrentPosition({
+         lat: position.coords.latitude,
+         lng: position.coords.longitude,
+       });
+     });
+   } else {
+     console.log("Geolocation is not available in your browser.");
+   }
+ }, []);    
+
+
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
-    libraries: ["places"],
+    libraries: libraries,
   });
 
-  const onLoad = useCallback((map) => {
-    const bounds = new window.google.maps.LatLngBounds(kotor);
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
 
-  if (!isLoaded) return <h1>Loading...</h1>;
+
+    if (!isLoaded) return <h1>Loading...</h1>;
+    console.log(currentPosition)
   return (
     <>
       <div className="grid grid-cols-[450px,1fr]">
@@ -49,16 +61,15 @@ function App() {
         <main>
           {isLoaded ? (
             <GoogleMap
-              center={kotor}
+              center={currentPosition}
               zoom={10}
               mapContainerStyle={{ width: "100%", height: "100vh" }}
-              onLoad={onLoad}
             >
-              <MarkerF position={kotor} />
+              <MarkerF position={currentPosition} />
             </GoogleMap>
           ) : null}
         </main>
-      </div>
+          </div>
     </>
   );
 }
