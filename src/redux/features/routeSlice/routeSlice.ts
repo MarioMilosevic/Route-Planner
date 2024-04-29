@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 
-// array destinacija koji su objekti id i naziv npr
 type destination = {
   id: string;
   name: string;
@@ -13,10 +12,6 @@ type RouteState = {
   waypoints: destination[];
   endPoint: string;
 };
-
-// starting point
-// waypoints ili ti zaustavna mjesta [array]
-// end point - destination
 
 const initialState: RouteState = {
   startingPoint: "",
@@ -32,14 +27,22 @@ export const routeSlice = createSlice({
       state.waypoints.push(action.payload);
     },
     addStartPoint: (state, action: PayloadAction<string>) => {
-      state.startingPoint += action.payload;
+      state.startingPoint = action.payload;
     },
     addEndPoint: (state, action: PayloadAction<string>) => {
-      state.endPoint += action.payload;
+      state.endPoint = action.payload;
+    },
+    updatePoint: (
+      state,
+      action: PayloadAction<{ point: string; type: "Starting point" }>
+    ) => {
+      const { point, type } = action.payload;
+      state[type === "Starting point" ? "startingPoint" : "endPoint"] = point;
     },
   },
 });
 
-export const { addWaypoint, addStartPoint, addEndPoint } = routeSlice.actions;
+export const { addWaypoint, addStartPoint, addEndPoint, updatePoint } =
+  routeSlice.actions;
 
 export default routeSlice.reducer;
