@@ -1,29 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store/store";
 
-export type routeItem = {
-    position: string;
-}
+// array destinacija koji su objekti id i naziv npr
+type destination = {
+  id: string;
+  name: string;
+};
 
-export type routeState = {
-    position: string;
-    distance: string;
-    startingPoint: string;
-    endPoint: string;
-}
+type RouteState = {
+  places: destination[];
+};
 
-const initialState: routeState = {
-    position:'',
-    distance:'',
-    startingPoint:'',
-    endPoint:'',
-}
+const initialState: RouteState = {
+  places: [],
+};
 
 export const routeSlice = createSlice({
-    name: "route",
-    initialState,
-    reducers: {
-        
-    }
-})
+  name: "route",
+  initialState,
+  reducers: {
+    addRoute: (state, action: PayloadAction<destination>) => {
+      state.places.push(action.payload);
+    },
+  },
+});
+
+
+export const { addRoute } = routeSlice.actions;
+
+export default routeSlice.reducer;

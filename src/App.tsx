@@ -55,7 +55,6 @@ function App() {
           <Autocomplete className="w-full">
             <Input text="Destination" />
           </Autocomplete>
-
           <Button scale="big" text="Add stop" />
           <TravelOption />
           <CalculateRoute />

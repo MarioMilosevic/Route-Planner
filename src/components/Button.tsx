@@ -10,7 +10,7 @@ const Button = ({ text, scale }: ButtonComponentProps) => {
       : "";
   return (
     <button
-      className={`my-8 uppercase rounded-full bg-stone-400 ${size} text-base py-2 text-stone-800`}
+      className={`my-8 uppercase rounded-full cursor-not-allowed bg-stone-400 ${size} text-base py-2 text-stone-800`}
     >
       {text}
     </button>
