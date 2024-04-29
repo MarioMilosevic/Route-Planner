@@ -1,8 +1,5 @@
 import { ButtonComponentProps } from "../utils/types/types";
-import { useRouteSlice } from "../hooks/useRouteSlice";
 const Button = ({ text, scale, clickHandler }: ButtonComponentProps) => {
-  const { startingPoint, endPoint } = useRouteSlice();
-
   const size =
     scale === "big"
       ? "w-full"
@@ -14,7 +11,7 @@ const Button = ({ text, scale, clickHandler }: ButtonComponentProps) => {
   return (
     <button
       className={`my-8 uppercase rounded-full cursor-not-allowed bg-stone-400 ${size} text-base py-2 text-stone-800`}
-      onClick={(e) => clickHandler(e, startingPoint, endPoint)}
+      onClick={clickHandler}
     >
       {text}
     </button>

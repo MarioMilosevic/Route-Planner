@@ -5,9 +5,7 @@ import { useDispatch } from "react-redux";
 import {
   addStartPoint,
   addEndPoint,
-  // updatePoint
 } from "../redux/features/routeSlice/routeSlice";
-// import { Autocomplete } from "@react-google-maps/api";
 
 import { Autocomplete } from "@react-google-maps/api";
 import { useState } from "react";
@@ -19,7 +17,6 @@ const Input = ({ text }: InputComponentProps) => {
   const dispatch = useDispatch();
 
   const update = (value: string) => {
-    console.log(value);
     text === "Starting point"
       ? dispatch(addStartPoint(value))
       : dispatch(addEndPoint(value));
@@ -32,11 +29,12 @@ const Input = ({ text }: InputComponentProps) => {
   function locationSelected() {
     if (searchResult) {
       const place = searchResult.getPlace();
-      const formatedAddress = place.formatted_address
-      update(formatedAddress)
+      const formatedAddress = place.formatted_address;
+      if (formatedAddress) {
+        update(formatedAddress);
+      }
     }
   }
-  
 
   return (
     <Autocomplete onLoad={onLoad} onPlaceChanged={locationSelected}>

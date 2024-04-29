@@ -3,30 +3,28 @@ import Button from "./components/Button";
 import TravelOption from "./components/TravelOption";
 import Title from "./components/Title";
 import CalculateRoute from "./components/CalculateRoute";
-import { calculateRouteFn } from "./utils/helperFunctions/helperFunctions";
 import { useDispatch } from "react-redux";
 import { usePositionSlice } from "./hooks/usePositionSlice";
 import { setPosition } from "./redux/features/positionSlice/positionSlice";
+import { useDirectionsSlice } from "./hooks/useDirectionsSlice";
 import { MapSchemaFormValues, mapSchema } from "./utils/zod/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useJsApiLoader,
   GoogleMap,
   MarkerF,
-  Autocomplete,
   Libraries,
-  StandaloneSearchBox,
-  //   DirectionsRenderer,
+    DirectionsRenderer,
 } from "@react-google-maps/api";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useRouteSlice } from "./hooks/useRouteSlice";
-import { addStartPoint } from "./redux/features/routeSlice/routeSlice";
+
 const libraries: Libraries = ["places"];
+// const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
 function App() {
   const currentPosition = usePositionSlice();
-  const { startingPoint, endPoint } = useRouteSlice();
+  const { directions } = useDirectionsSlice()
   const dispatch = useDispatch();
   const form = useForm<MapSchemaFormValues>({
     defaultValues: {
@@ -36,10 +34,10 @@ function App() {
     resolver: zodResolver(mapSchema),
   });
   const {
-    register,
-    watch,
+    // register,
+    // watch,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = form;
   useEffect(() => {
     if ("geolocation" in navigator) {
@@ -57,9 +55,6 @@ function App() {
     }
   }, [dispatch]);
 
-  console.log("start point", startingPoint);
-  console.log("end point", endPoint);
-
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -67,18 +62,10 @@ function App() {
 
   const onSubmit = (e, data) => {
     e.preventDefault();
+    // dispatch(setDirections(data))
     console.log(data);
   };
-
-  // const handlePlaceChanged = () => {
-  //   console.log(inputRef);
-  //   const { place } = inputRef.current.getPlaces();
-  //   console.log(place);
-  //   if (place) {
-  //     console.log(place.formatted_address);
-  //   }
-  // };
-
+console.log(directions)
   if (!isLoaded) return <h1>Loading...</h1>;
 
   return (
@@ -102,7 +89,7 @@ function App() {
               mapContainerStyle={{ width: "100%", height: "100vh" }}
             >
               <MarkerF position={currentPosition} />
-              {/* ako imam directionsResponse onda renderuj DirectionsRenderer directions={directionsResponse}*/}
+               {directions && <DirectionsRenderer directions={directions}/>}
             </GoogleMap>
           ) : null}
         </main>

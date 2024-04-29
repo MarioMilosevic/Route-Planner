@@ -1,3 +1,5 @@
+
+
 export const calculateRouteFn = async (
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   start: string,
@@ -13,11 +15,7 @@ export const calculateRouteFn = async (
     destination: end,
     travelMode: google.maps.TravelMode.DRIVING,
   });
-  console.log(start);
-  console.log(end);
   console.log(results);
+  return results
 };
 
-// setDirectionsResponse(results);
-// setDistance(results.routes[0].legs[0].distance.text);
-// setDuration(results.routes[0].legs[0].duration.text);

@@ -11,3 +11,10 @@ export const mapSchema = z.object({
 
 export type MapSchemaFormValues = z.infer<typeof mapSchema>
 
+  // const form = useForm<MapSchemaFormValues>({
+  //   defaultValues: {
+  //     startingPoint: "",
+  //     endPoint: "",
+  //   },
+  //   resolver: zodResolver(mapSchema),
+  // });

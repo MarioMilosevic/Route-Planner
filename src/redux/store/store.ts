@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import positionSlice from "../features/positionSlice/positionSlice";
 import routeSlice from "../features/routeSlice/routeSlice";
+import directionsSlice from "../features/directionsSlice/directionsSlice";
 
 export const store = configureStore({
     reducer: {
         position: positionSlice,
-        route:routeSlice
+        route: routeSlice,
+        directions:directionsSlice
     }
 })
 
