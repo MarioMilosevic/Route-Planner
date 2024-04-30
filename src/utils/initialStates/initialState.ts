@@ -3,9 +3,9 @@ export const currentPositionInit = {
   lng: 0,
 };
 
-export const directionsInit = {
-  directions: null,
-};
+// export const directionsInit = {
+//   directions: null,
+// };
 
 
 export const routeInit = {

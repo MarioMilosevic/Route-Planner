@@ -3,9 +3,9 @@ import Button from "./components/Button";
 import TravelOption from "./components/TravelOption";
 import Title from "./components/Title";
 import CalculateRoute from "./components/CalculateRoute";
-import { directionsInit, routeInit } from "./utils/initialStates/initialState";
+import { routeInit } from "./utils/initialStates/initialState";
 import { useState } from "react";
-import { DirectionsState, RouteState } from "./utils/types/types";
+import { RouteState } from "./utils/types/types";
 import { MapSchemaFormValues, mapSchema } from "./utils/zod/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Loading from "./components/Loading";
@@ -23,12 +23,12 @@ import Information from "./components/Information";
 const libraries: Libraries = ["places"];
 
 function App() {
-  const [directions, setDirections] = useState<DirectionsState>(directionsInit);
+  const [directions, setDirections] = useState<google.maps.DirectionsResult>();
   const [route, setRoute] = useState<RouteState>(routeInit);
   const [inputId, setInputId] = useState();
   const [travelMode, setTravelMode] = useState<string>("DRIVING");
-  const [distance, setDistance] = useState("");
-  const [duration, setDuration] = useState("");
+  const [distance, setDistance] = useState<string>("");
+  const [duration, setDuration] = useState<string>("");
 
   const form = useForm<MapSchemaFormValues>({
     defaultValues: {

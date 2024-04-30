@@ -12,7 +12,6 @@ const Input = ({
   const [searchResult, setSearchResult] =
     useState<google.maps.places.Autocomplete>();
 
-
   const inputRoute =
     text === "Starting point" ? route.startingPoint : route.endPoint;
 

@@ -16,7 +16,7 @@ export type ButtonComponentProps = {
   scale: string;
   clickHandler: (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => Promise<google.maps.DirectionsResult | undefined>;
+  ) => Promise<void> | void;
 };
 
 export type CoordinatesType = {
@@ -26,9 +26,9 @@ export type CoordinatesType = {
 
 export type directionsResultType = google.maps.DirectionsResult;
 
-export type DirectionsState = {
-  directions: directionsResultType | null;
-};
+// export type DirectionsState = {
+//   directions: directionsResultType | null;
+// };
 
 export type destination = {
   id: string;
@@ -42,26 +42,27 @@ export type RouteState = {
   endPoint: string;
 };
 
-export type CalculaterRouteProps = {
+export type CalculateRouteProps = {
   travelMode: string;
   route: RouteState;
-  setDirections: Dispatch<SetStateAction<DirectionsState>>;
+  setDirections: Dispatch<SetStateAction<google.maps.DirectionsResult>>;
   setCurrentPosition: Dispatch<SetStateAction<PositionState>>;
   setRoute: Dispatch<SetStateAction<RouteState>>;
-  updatePosition:() => void
+  updatePosition: () => void;
+  setDuration: Dispatch<SetStateAction<string>>;
+  setDistance: Dispatch<SetStateAction<string>>;
 };
 
 export type TravelModeState = {
-  travelMode:string
-}
-
+  travelMode: string;
+};
 
 export type TravelModeProps = {
   travelMode: string;
-  setTravelMode: Dispatch<SetStateAction<TravelModeState>>
-}
+  setTravelMode: Dispatch<SetStateAction<TravelModeState>>;
+};
 
 export type InformationProps = {
   title: string;
   stats: string;
-}
+};
