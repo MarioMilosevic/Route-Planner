@@ -2,9 +2,16 @@ import { InputComponentProps } from "../utils/types/types";
 import { Autocomplete } from "@react-google-maps/api";
 import { useState } from "react";
 
-const Input = ({ text, route, setRoute }: InputComponentProps) => {
+const Input = ({
+  inputId,
+  getInputId,
+  text,
+  route,
+  setRoute,
+}: InputComponentProps) => {
   const [searchResult, setSearchResult] =
     useState<google.maps.places.Autocomplete>();
+
 
   const inputRoute =
     text === "Starting point" ? route.startingPoint : route.endPoint;
@@ -13,6 +20,7 @@ const Input = ({ text, route, setRoute }: InputComponentProps) => {
     setRoute((prev) => ({
       ...prev,
       startingPoint: text === "Starting point" ? value : prev.startingPoint,
+      // waypoints: text === "Waypoint" ? value : prev.waypoints,
       endPoint: text === "Destination" ? value : prev.endPoint,
     }));
   };
@@ -40,6 +48,7 @@ const Input = ({ text, route, setRoute }: InputComponentProps) => {
         placeholder={text}
         value={inputRoute}
         onChange={(e) => update(e.target.value)}
+        onClick={(e) => console.dir(e.target)}
       />
     </Autocomplete>
   );

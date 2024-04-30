@@ -3,15 +3,13 @@ import { calculateRouteFn } from "../utils/helperFunctions/helperFunctions";
 import { CalculaterRouteProps } from "../utils/types/types";
 import { directionsInit, routeInit } from "../utils/initialStates/initialState";
 
-const CalculateRoute = ({ route, setDirections, setRoute, setCurrentPosition, updatePosition }: CalculaterRouteProps) => {
-  const { startingPoint, endPoint } = route;
-
+const CalculateRoute = ({travelMode ,route, setDirections, setRoute, setCurrentPosition, updatePosition }: CalculaterRouteProps) => {
   const calculateRouteHandler = async (e) => {
     try {
-      const result = await calculateRouteFn(e, startingPoint, endPoint);
+      const result = await calculateRouteFn(e, route ,travelMode);
       // const {origin, destination} = result
       console.log(result);
-      console.log(startingPoint);
+      console.log(route)
       setDirections(result);
       setCurrentPosition(result?.origin);
     } catch (error) {

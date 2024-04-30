@@ -49,3 +49,13 @@ export type CalculaterRouteProps = {
   setRoute: Dispatch<SetStateAction<RouteState>>;
   updatePosition:() => void
 };
+
+export type TravelModeState = {
+  travelMode:string
+}
+
+
+export type TravelModeProps = {
+  travelMode: string;
+  setTravelMode: Dispatch<SetStateAction<TravelModeState>>
+}

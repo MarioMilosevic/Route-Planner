@@ -2,18 +2,22 @@
 
 export const calculateRouteFn = async (
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  start: string,
-  end: string
+  route,
+  travelMode
 ) => {
   e.preventDefault();
-  if (start === "" || end === "") {
+  console.log(travelMode)
+  const {startingPoint, endPoint, waypoints} = route
+  if (startingPoint === "" || endPoint === "") {
     return;
   }
   const directionsService = new google.maps.DirectionsService();
   const results = await directionsService.route({
-    origin: start,
-    destination: end,
-    travelMode: google.maps.TravelMode.DRIVING,
+    origin: startingPoint,
+    destination: endPoint,
+    waypoints,
+    travelMode: google.maps.TravelMode[travelMode],
+    // travelMode: google.maps.TravelMode.DRIVING,
   });
   console.log(results);
   return results

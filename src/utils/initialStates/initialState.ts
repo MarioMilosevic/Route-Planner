@@ -13,3 +13,5 @@ export const routeInit = {
   waypoints: [],
   endPoint: "",
 };
+
+export const TravelModeState = ""
