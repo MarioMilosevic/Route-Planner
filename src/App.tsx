@@ -20,7 +20,6 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const libraries: Libraries = ["places"];
-// const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
 function App() {
   const currentPosition = usePositionSlice();
@@ -39,6 +38,7 @@ function App() {
     handleSubmit,
     // formState: { errors },
   } = form;
+  
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(function (position) {
@@ -53,7 +53,7 @@ function App() {
     } else {
       console.log("Geolocation is not available in your browser.");
     }
-  }, [dispatch]);
+  }, [dispatch, currentPosition]);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -65,7 +65,6 @@ function App() {
     // dispatch(setDirections(data))
     console.log(data);
   };
-console.log(directions)
   if (!isLoaded) return <h1>Loading...</h1>;
 
   return (

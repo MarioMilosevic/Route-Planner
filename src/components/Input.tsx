@@ -9,9 +9,11 @@ import {
 
 import { Autocomplete } from "@react-google-maps/api";
 import { useState } from "react";
+
 const Input = ({ text }: InputComponentProps) => {
   const [searchResult, setSearchResult] =
     useState<google.maps.places.Autocomplete>();
+  
   const { startingPoint, endPoint } = useRouteSlice();
   const route = text === "Starting point" ? startingPoint : endPoint;
   const dispatch = useDispatch();

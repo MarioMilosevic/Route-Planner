@@ -3,6 +3,7 @@ export type InputComponentProps = {
 };
 
 export type ButtonComponentProps = {
+  isActive: string;
   text: string;
   scale: string;
   clickHandler: (
@@ -14,3 +15,5 @@ export type CoordinatesType = {
   latitude: number;
   longitude: number;
 };
+
+export type directionsResultType = google.maps.DirectionsResult;

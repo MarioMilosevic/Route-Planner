@@ -1,15 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 
-
 type PositionState = {
-        lat: number;
-        lng:number
+  lat: number;
+  lng: number;
 };
 
 const initialState: PositionState = {
-        lat: 0,
-        lng: 0,
+  lat: 0,
+  lng: 0,
 };
 
 export const positionSlice = createSlice({
@@ -20,9 +19,12 @@ export const positionSlice = createSlice({
       state.lat = action.payload.lat;
       state.lng = action.payload.lng;
     },
+    resetPosition: (state) => {
+      (state.lat = 0), (state.lng = 0);
+    },
   },
 });
 
-export const { setPosition } = positionSlice.actions;
+export const { setPosition, resetPosition } = positionSlice.actions;
 
 export default positionSlice.reducer;

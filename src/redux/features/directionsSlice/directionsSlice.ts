@@ -1,25 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { directionsResultType } from "../../../utils/types/types";
 
-type PositionState = {
- directions:string
+interface DirectionsState {
+  directions: directionsResultType | null;
+}
+
+const initialState: DirectionsState = {
+  directions: null,
 };
 
-const initialState: PositionState = {
-  directions:''  
-};
-
-export const positionSlice = createSlice({
-  name: "currentPosition",
+export const directionsSlice = createSlice({
+  name: "directions",
   initialState,
   reducers: {
-      setDirections: (state, action:PayloadAction<string>) => {
-          state.directions = action.payload
-        }
+    setDirections: (state, action: PayloadAction<directionsResultType | null>) => {
+      state.directions = action.payload;
     },
   },
-);
+});
 
-export const { setDirections } = positionSlice.actions;
-
-export default positionSlice.reducer;
+export const { setDirections } = directionsSlice.actions;
+export default directionsSlice.reducer;
