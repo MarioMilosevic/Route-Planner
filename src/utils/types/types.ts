@@ -41,3 +41,11 @@ export type RouteState = {
   waypoints: destination[];
   endPoint: string;
 };
+
+export type CalculaterRouteProps = {
+  route: RouteState;
+  setDirections: Dispatch<SetStateAction<DirectionsState>>;
+  setCurrentPosition: Dispatch<SetStateAction<PositionState>>;
+  setRoute: Dispatch<SetStateAction<RouteState>>;
+  updatePosition:() => void
+};

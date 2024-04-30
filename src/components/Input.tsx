@@ -5,8 +5,6 @@ import { useState } from "react";
 const Input = ({ text, route, setRoute }: InputComponentProps) => {
   const [searchResult, setSearchResult] =
     useState<google.maps.places.Autocomplete>();
-  console.log(route);
-  console.log(text);
 
   const inputRoute =
     text === "Starting point" ? route.startingPoint : route.endPoint;
