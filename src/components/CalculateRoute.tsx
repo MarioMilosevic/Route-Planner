@@ -3,22 +3,23 @@ import { calculateRouteFn } from "../utils/helperFunctions/helperFunctions";
 import { CalculaterRouteProps } from "../utils/types/types";
 import { directionsInit, routeInit } from "../utils/initialStates/initialState";
 
-const CalculateRoute = ({travelMode ,route, setDirections, setRoute, setCurrentPosition, updatePosition }: CalculaterRouteProps) => {
+const CalculateRoute = ({travelMode ,route, setDirections, setRoute,updatePosition, setDuration, setDistance }: CalculaterRouteProps) => {
   const calculateRouteHandler = async (e) => {
     try {
-      const result = await calculateRouteFn(e, route ,travelMode);
-      // const {origin, destination} = result
-      console.log(result);
-      console.log(route)
+      const result = await calculateRouteFn(e, route, travelMode);
+      const resultRoute = result?.routes[0].legs[0]
+      console.log(resultRoute?.duration?.text)
+      console.log(resultRoute?.distance?.text)
+      setDuration(resultRoute?.duration.text)
+      setDistance(resultRoute?.distance.text)
+      // console.log(result?.routes[0].distance.text)
       setDirections(result);
-      setCurrentPosition(result?.origin);
     } catch (error) {
-      console.log("nesto crklo");
+      console.log("calculateRouteHandler ne radi");
     }
   };
 
   const resetRoute = () => {
-    console.log('radi')
     setDirections(directionsInit);
     setRoute(routeInit)
     updatePosition()

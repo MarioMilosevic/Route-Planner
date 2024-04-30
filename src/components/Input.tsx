@@ -48,7 +48,7 @@ const Input = ({
         placeholder={text}
         value={inputRoute}
         onChange={(e) => update(e.target.value)}
-        onClick={(e) => console.dir(e.target)}
+        // onClick={(e) => console.dir(e.target)}
       />
     </Autocomplete>
   );

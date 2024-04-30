@@ -1,13 +1,13 @@
-
+import { RouteState } from "../types/types";
 
 export const calculateRouteFn = async (
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  route,
-  travelMode
+  route:RouteState,
+  travelMode:string
 ) => {
   e.preventDefault();
-  console.log(travelMode)
-  const {startingPoint, endPoint, waypoints} = route
+  console.log(travelMode);
+  const { startingPoint, endPoint, waypoints } = route;
   if (startingPoint === "" || endPoint === "") {
     return;
   }
@@ -16,10 +16,11 @@ export const calculateRouteFn = async (
     origin: startingPoint,
     destination: endPoint,
     waypoints,
-    travelMode: google.maps.TravelMode[travelMode],
-    // travelMode: google.maps.TravelMode.DRIVING,
+    travelMode:
+      travelMode === "DRIVING"
+        ? google.maps.TravelMode.DRIVING
+        : google.maps.TravelMode.WALKING,
   });
   console.log(results);
-  return results
+  return results;
 };
-

@@ -18,7 +18,7 @@ import {
 } from "@react-google-maps/api";
 import useGeolocation from "./hooks/useGeolocation";
 import { useForm } from "react-hook-form";
-import { get } from "http";
+import Information from "./components/Information";
 
 const libraries: Libraries = ["places"];
 
@@ -26,7 +26,9 @@ function App() {
   const [directions, setDirections] = useState<DirectionsState>(directionsInit);
   const [route, setRoute] = useState<RouteState>(routeInit);
   const [inputId, setInputId] = useState();
-  const [travelMode, setTravelMode] = useState<string>("DRIVING ")
+  const [travelMode, setTravelMode] = useState<string>("DRIVING");
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("");
 
   const form = useForm<MapSchemaFormValues>({
     defaultValues: {
@@ -55,14 +57,11 @@ function App() {
   const getInputId = (id: string) => {
     setInputId(id);
   };
-
-  console.log(route);
   const onSubmit = (e, data) => {
     e.preventDefault();
     console.log(data);
   };
   if (!isLoaded) return <Loading />;
-console.log(travelMode)
   return (
     <>
       <div className="grid grid-cols-[450px,1fr]">
@@ -94,17 +93,28 @@ console.log(travelMode)
               text="Destination"
             />
             <Button scale="big" text="Add stop" clickHandler={addWaypoint} />
-            <TravelOption travelMode={travelMode} setTravelMode={setTravelMode } />
+            <TravelOption
+              travelMode={travelMode}
+              setTravelMode={setTravelMode}
+            />
             <CalculateRoute
-              travelMode={travelMode }
+              travelMode={travelMode}
               route={route}
+              setRoute={setRoute}
               setDirections={setDirections}
               setCurrentPosition={setCurrentPosition}
               updatePosition={updatePosition}
-              setRoute={setRoute}
               onSubmit={handleSubmit(onSubmit)}
+              setDuration={setDuration}
+              setDistance={setDistance}
             />
           </form>
+          {duration && distance && (
+            <div className="w-full px-2 flex justify-between border rounded-lg bg-stone-200 text-stone-800">
+              <Information stats={duration} title="Duration" />
+              <Information stats={distance} title="Distance" />
+            </div>
+          )}
         </aside>
         <main>
           {isLoaded ? (

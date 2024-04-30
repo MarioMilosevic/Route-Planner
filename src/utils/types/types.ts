@@ -43,6 +43,7 @@ export type RouteState = {
 };
 
 export type CalculaterRouteProps = {
+  travelMode: string;
   route: RouteState;
   setDirections: Dispatch<SetStateAction<DirectionsState>>;
   setCurrentPosition: Dispatch<SetStateAction<PositionState>>;
@@ -58,4 +59,9 @@ export type TravelModeState = {
 export type TravelModeProps = {
   travelMode: string;
   setTravelMode: Dispatch<SetStateAction<TravelModeState>>
+}
+
+export type InformationProps = {
+  title: string;
+  stats: string;
 }
