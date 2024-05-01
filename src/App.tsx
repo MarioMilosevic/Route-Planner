@@ -25,7 +25,6 @@ const libraries: Libraries = ["places"];
 function App() {
   const [directions, setDirections] = useState<google.maps.DirectionsResult>();
   const [route, setRoute] = useState<RouteState>(routeInit);
-  const [inputId, setInputId] = useState();
   const [travelMode, setTravelMode] = useState<string>("DRIVING");
   const [distance, setDistance] = useState<string>("");
   const [duration, setDuration] = useState<string>("");
@@ -48,15 +47,15 @@ function App() {
   });
 
   const addWaypoint = () => {
-    const waypoint = { id: crypto.randomUUID(), name: "Waypoint" };
+    const waypoint = { placeId: crypto.randomUUID(), location:"", stopover:true };
     setRoute((prev) => {
       return { ...prev, waypoints: [...prev.waypoints, waypoint] };
     });
   };
 
-  const getInputId = (id: string) => {
-    setInputId(id);
-  };
+  // const getInputId = (id: string) => {
+  //   setInputId(id);
+  // };
   const onSubmit = (e, data) => {
     e.preventDefault();
     console.log(data);
@@ -71,25 +70,20 @@ function App() {
             <Input
               route={route}
               setRoute={setRoute}
-              inputId={inputId}
-              getInputId={getInputId}
               text="Starting point"
             />
             {route.waypoints.map((waypoint) => (
               <Input
-                key={waypoint.id}
-                inputId={inputId}
-                getInputId={getInputId}
+                key={waypoint.placeId}
+                id={ waypoint.placeId}
                 route={route}
                 setRoute={setRoute}
-                text={waypoint.name}
+                text="Waypoint"
               />
             ))}
             <Input
               route={route}
               setRoute={setRoute}
-              inputId={inputId}
-              getInputId={getInputId}
               text="Destination"
             />
             <Button scale="big" text="Add stop" clickHandler={addWaypoint} />

@@ -2,15 +2,15 @@ import { RouteState } from "../types/types";
 
 export const calculateRouteFn = async (
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  route:RouteState,
-  travelMode:string
+  route: RouteState,
+  travelMode: string
 ) => {
   e.preventDefault();
-  console.log(travelMode);
   const { startingPoint, endPoint, waypoints } = route;
   if (startingPoint === "" || endPoint === "") {
     return;
   }
+  console.log("ovo saljem", waypoints);
   const directionsService = new google.maps.DirectionsService();
   const results = await directionsService.route({
     origin: startingPoint,
@@ -24,3 +24,21 @@ export const calculateRouteFn = async (
   console.log(results);
   return results;
 };
+
+const urlPlaceId = `https://maps.googleapis.com/maps/api/geocode/json?place_id=ChIJeRpOeF67j4AR9ydy_PIzPuM&key=${import.VITE_PUBLIC_GOOGLE_MAPS_API_KEY}`;
+// ovo ispod sam nasao
+// const urlAdress = `https://maps.googleapis.com/maps/api/geocode/json?address=${nekaAdresa}&key=${import.VITE_PUBLIC_GOOGLE_MAPS_API_KEY}`;
+
+async function getCoordsForAddress(address: type) {
+  const response = await fetch(
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${import.VITE_PUBLIC_GOOGLE_MAPS_API_KEY}`
+  );
+
+  console.log(response);
+  /* 
+const data = response.data
+const coordinates = data.results[0].geometry.location
+
+return coordinates
+*/
+}

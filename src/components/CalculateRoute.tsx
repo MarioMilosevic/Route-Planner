@@ -25,7 +25,7 @@ const CalculateRoute = ({
         setDirections(result);
       }
     } catch (error) {
-      console.log("calculateRouteHandler ne radi");
+      console.log("calculateRouteHandler ne radi", error);
     }
   };
   const resetRoute = () => {

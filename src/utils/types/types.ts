@@ -26,14 +26,10 @@ export type CoordinatesType = {
 
 export type directionsResultType = google.maps.DirectionsResult;
 
-// export type DirectionsState = {
-//   directions: directionsResultType | null;
-// };
-
 export type destination = {
-  id: string;
-  name: string;
-  stopOver: boolean;
+  placeId: string;
+  location: string;
+  stopover: boolean;
 };
 
 export type RouteState = {
