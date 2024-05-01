@@ -8,6 +8,7 @@ import { useState } from "react";
 import { RouteState } from "./utils/types/types";
 import { MapSchemaFormValues, mapSchema } from "./utils/zod/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getCoordsForAddress } from "./utils/helperFunctions/helperFunctions";
 import Loading from "./components/Loading";
 import {
   useJsApiLoader,
@@ -128,3 +129,6 @@ function App() {
 }
 
 export default App;
+
+// ubacim u array [{location:Cetinje, Montenegro}, {location:Kotor, Montenegro}]
+// forEach(location => da ih ubacim u waypoints array ili neki drugi, te koordinate i onda to proslijedim u onaj fetch) 

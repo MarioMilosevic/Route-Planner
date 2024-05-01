@@ -2,39 +2,45 @@ import Button from "./Button";
 import { calculateRouteFn } from "../utils/helperFunctions/helperFunctions";
 import { CalculateRouteProps } from "../utils/types/types";
 import { routeInit } from "../utils/initialStates/initialState";
+import { getCoordsForAddress } from "../utils/helperFunctions/helperFunctions";
 
 const CalculateRoute = ({
   travelMode,
   route,
-  setDirections,
   setRoute,
   updatePosition,
   setDuration,
   setDistance,
 }: CalculateRouteProps) => {
-  const calculateRouteHandler = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const { waypoints } = route;
+  console.log(waypoints);
+  const calculateRouteHandler = async (arr) => {
     try {
-      const result = await calculateRouteFn(e, route, travelMode);
-      if (result) {
-        const duration = result?.routes[0].legs[0].duration?.text;
-        const distance = result?.routes[0].legs[0].distance?.text;
-        setDuration(duration ?? "");
-        setDistance(distance ?? "");
-        setDirections(result);
-      }
+      const promises = arr.map((element) =>
+        getCoordsForAddress(element.location)
+      );
+      const coordinates = await Promise.all(promises);
+      console.log(coordinates);
+      // const result = await calculateRouteFn(e, route, travelMode);
+      // if (result) {
+      //   const duration = result?.routes[0].legs[0].duration?.text;
+      //   const distance = result?.routes[0].legs[0].distance?.text;
+      //   setDuration(duration ?? "");
+      //   setDistance(distance ?? "");
+      //   setDirections(result);
+      // }
     } catch (error) {
       console.log("calculateRouteHandler ne radi", error);
     }
   };
+
   const resetRoute = () => {
-    // setDirections(google.maps.DirectionsResult);
     setRoute(routeInit);
     setDistance("");
     setDuration("");
     updatePosition();
   };
+
   const isActive =
     route.startingPoint && route.endPoint
       ? "cursor-pointer"
@@ -46,7 +52,7 @@ const CalculateRoute = ({
         isActive={isActive}
         scale="medium"
         text="Calculate route"
-        clickHandler={(e) => calculateRouteHandler(e)}
+        clickHandler={() => calculateRouteHandler(waypoints)}
       />
       <Button
         isActive={isActive}
