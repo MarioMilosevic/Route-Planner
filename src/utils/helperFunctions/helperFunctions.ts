@@ -4,10 +4,11 @@ import { RouteState } from "../types/types";
 export const calculateRouteFn = async (
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   route: RouteState,
-  travelMode: string
+  travelMode: string,
+  waypoints
 ) => {
   e.preventDefault();
-  const { startingPoint, endPoint, waypoints } = route;
+  const { startingPoint, endPoint } = route;
   if (startingPoint === "" || endPoint === "") {
     return;
   }
