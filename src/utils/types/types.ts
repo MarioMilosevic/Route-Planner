@@ -42,12 +42,14 @@ export type RouteState = {
 export type CalculateRouteProps = {
   travelMode: string;
   route: RouteState;
-  setDirections: Dispatch<SetStateAction<google.maps.DirectionsResult>>;
+  setDirections: Dispatch<
+    SetStateAction<google.maps.DirectionsResult | undefined>
+  >;
   setCurrentPosition: Dispatch<SetStateAction<PositionState>>;
   setRoute: Dispatch<SetStateAction<RouteState>>;
   updatePosition: () => void;
-  setDuration: Dispatch<SetStateAction<string>>;
-  setDistance: Dispatch<SetStateAction<string>>;
+  setDuration: Dispatch<SetStateAction<durationType>>;
+  setDistance: Dispatch<SetStateAction<distanceType>>;
 };
 
 export type TravelModeState = {
@@ -56,18 +58,10 @@ export type TravelModeState = {
 
 export type TravelModeProps = {
   travelMode: string;
-  setTravelMode: Dispatch<SetStateAction<TravelModeState>>;
+  setTravelMode: Dispatch<SetStateAction<string>>;
 };
 
-export type InformationProps = {
-  title: string;
-  stats: {
-    totalDistance?: string;
-    distanceUnit?: string;
-    totalHours?: number;
-    totalMinutes?:number
-  };
-};
+
 
 export type FetchWaypointElements = {
   location: {
@@ -76,6 +70,17 @@ export type FetchWaypointElements = {
   };
   stopover: boolean;
 };
+
+export type InformationProps = {
+  title: string;
+  stats: {
+    totalDistance?: number;
+    distanceUnit?: string;
+    totalHours?: number;
+    totalMinutes?: number;
+  };
+};
+
 
 export type distanceType = {
   totalDistance: number;

@@ -10,8 +10,8 @@ import {
 } from "./utils/initialStates/initialState";
 import { useState } from "react";
 import { distanceType, RouteState, durationType } from "./utils/types/types";
-import { MapSchemaFormValues, mapSchema } from "./utils/zod/zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { MapSchemaFormValues, mapSchema } from "./utils/zod/zod";
+// import { zodResolver } from "@hookform/resolvers/zod";
 import Loading from "./components/Loading";
 import {
   useJsApiLoader,
@@ -21,7 +21,7 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import useGeolocation from "./hooks/useGeolocation";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 import Information from "./components/Information";
 
 const libraries: Libraries = ["places"];
@@ -33,15 +33,13 @@ function App() {
   const [distance, setDistance] = useState<distanceType>(distanceInit);
   const [duration, setDuration] = useState<durationType>(durationInit);
 
-  const form = useForm<MapSchemaFormValues>({
-    defaultValues: {
-      startingPoint: "",
-      endPoint: "",
-    },
-    resolver: zodResolver(mapSchema),
-  });
-  const { handleSubmit } = form;
-
+  // const form = useForm<MapSchemaFormValues>({
+  //   defaultValues: {
+  //     startingPoint: "",
+  //     endPoint: "",
+  //   },
+  //   resolver: zodResolver(mapSchema),
+  // });
   const { currentPosition, setCurrentPosition, updatePosition } =
     useGeolocation();
 
@@ -61,21 +59,16 @@ function App() {
     });
   };
 
-  const onSubmit = (e, data) => {
-    e.preventDefault();
-    console.log(data);
-  };
+
   if (!isLoaded) return <Loading />;
-  console.log("vrijeme", duration);
-  console.log("distanca",distance)
-  console.log("unit", distance.unit);
+ 
   return (
     <>
       <div className="grid grid-cols-[450px,1fr]">
         <aside className="bg-black flex flex-col items-center max-h-screen p-4 text-green-50">
           <Title />
-          <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-            <Input route={route} setRoute={setRoute} text="Starting point" />
+          <form className="w-full">
+            <Input id="" route={route} setRoute={setRoute} text="Starting point" />
             {route.waypoints.map((waypoint) => (
               <Input
                 key={waypoint.placeId}
@@ -85,8 +78,8 @@ function App() {
                 text="Waypoint"
               />
             ))}
-            <Input route={route} setRoute={setRoute} text="Destination" />
-            <Button scale="big" text="Add stop" clickHandler={addWaypoint} />
+            <Input id="" route={route} setRoute={setRoute} text="Destination" />
+            <Button isActive="" scale="big" text="Add stop" clickHandler={addWaypoint} />
             <TravelOption
               travelMode={travelMode}
               setTravelMode={setTravelMode}
@@ -98,7 +91,6 @@ function App() {
               setDirections={setDirections}
               setCurrentPosition={setCurrentPosition}
               updatePosition={updatePosition}
-              onSubmit={handleSubmit(onSubmit)}
               setDuration={setDuration}
               setDistance={setDistance}
             />
@@ -129,5 +121,3 @@ function App() {
 
 export default App;
 
-// ubacim u array [{location:Cetinje, Montenegro}, {location:Kotor, Montenegro}]
-// forEach(location => da ih ubacim u waypoints array ili neki drugi, te koordinate i onda to proslijedim u onaj fetch)

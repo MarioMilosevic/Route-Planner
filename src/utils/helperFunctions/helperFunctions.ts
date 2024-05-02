@@ -26,21 +26,14 @@ export const calculateRouteFn = async (
   return results;
 };
 
-// const urlPlaceId = `https://maps.googleapis.com/maps/api/geocode/json?place_id=ChIJeRpOeF67j4AR9ydy_PIzPuM&key=${import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY}`;
-// ovo ispod sam nasao
-// const urlAdress = `https://maps.googleapis.com/maps/api/geocode/json?address=${nekaAdresa}&key=${import.VITE_PUBLIC_GOOGLE_MAPS_API_KEY}`;
-
 export async function getCoordsForAddress(address: string) {
   const response = await axios.get(
     `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${
       import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY
     }`
   );
-  console.log(response);
   const data = response.data;
-  console.log(data);
   const coordinates = data.results[0].geometry.location;
-  console.log(coordinates);
   return coordinates;
 }
 
@@ -83,23 +76,3 @@ export const calculateDuration = (arr) => {
   return totalInformation;
 };
 
-
-
-// console.log("odje gledam",mario);
-
-// const getTotalMinutes = (trips) => {
-//   return trips.reduce((total, trip) => {
-//     const text = trip.duration.text;
-//     if (text.includes("hour")) {
-//       const [hours, minutes] = text.split(" ");
-//       console.log(hours)
-//       console.log(minutes)
-//       return total + parseInt(hours) * 60 + parseInt(minutes);
-//     } else {
-//       return total + parseInt(text);
-//     }
-//   }, 0);
-// };
-
-// const totalMinutes = getTotalMinutes(tripsDuration);
-// console.log("Total Duration in Minutes:", totalMinutes);

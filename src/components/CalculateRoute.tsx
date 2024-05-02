@@ -3,10 +3,14 @@ import {
   calculateRouteFn,
   getCoordsForAddress,
   calculateDistance,
-  calculateDuration
+  calculateDuration,
 } from "../utils/helperFunctions/helperFunctions";
-import { CalculateRouteProps } from "../utils/types/types";
-import { routeInit, durationInit, distanceInit } from "../utils/initialStates/initialState";
+import { CalculateRouteProps, destination } from "../utils/types/types";
+import {
+  routeInit,
+  durationInit,
+  distanceInit,
+} from "../utils/initialStates/initialState";
 
 const CalculateRoute = ({
   travelMode,
@@ -19,7 +23,10 @@ const CalculateRoute = ({
 }: CalculateRouteProps) => {
   const { waypoints } = route;
 
-  const calculateRouteHandler = async (e, arr) => {
+  const calculateRouteHandler = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    arr:destination[]
+  ) => {
     try {
       const promises = arr.map(async (element) => {
         const stopover = true;
@@ -31,7 +38,7 @@ const CalculateRoute = ({
       if (result) {
         const trips = result.routes[0].legs;
         setDistance(calculateDistance(trips));
-        setDuration(calculateDuration(trips))
+        setDuration(calculateDuration(trips));
         setDirections(result);
       }
     } catch (error) {

@@ -4,8 +4,8 @@ export const currentPositionInit = {
 };
 
 export const distanceInit = {
-  distance: 0,
-  unit: "",
+  totalDistance: 0,
+  distanceUnit: "",
 };
 
 export const durationInit = {
