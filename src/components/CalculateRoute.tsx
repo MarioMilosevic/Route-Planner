@@ -3,6 +3,7 @@ import {
   calculateRouteFn,
   getCoordsForAddress,
   calculateDistance,
+  calculateDuration
 } from "../utils/helperFunctions/helperFunctions";
 import { CalculateRouteProps } from "../utils/types/types";
 import { routeInit } from "../utils/initialStates/initialState";
@@ -33,23 +34,8 @@ const CalculateRoute = ({
         console.log(result);
         const trips = result.routes[0].legs;
         console.log(trips);
-        const { totalDistance, distanceUnit } = calculateDistance(trips);
-        setDistance(calculateDistance(trips))
-        console.log(totalDistance)
-        console.log(distanceUnit)
-        // const duration = result?.routes[0].legs[0].duration?.text;
-        // console.log(duration)
-        // duration should be result?.routes[0].legs[0].reduce(reduce logic to add duration?.text)
-        // const totalKilometres = trips.reduce(
-        //   (acc, curr) => acc + parseFloat(curr.distance.text),
-        //   0
-        // );
-        // const totalDuration = trips.reduce((acc, curr) => acc + parseFloat(curr.duration.text), 0)
-        // console.log(totalDuration)
-        // console.log(totalKilometres)
-        // const distance = result?.routes[0].legs[0].distance?.text;
-        // setDuration(duration ?? "");
-        // setDistance(distance ?? "");
+        setDistance(calculateDistance(trips));
+        setDuration(calculateDuration(trips))
         setDirections(result);
       }
     } catch (error) {

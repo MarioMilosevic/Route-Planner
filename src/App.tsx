@@ -3,12 +3,11 @@ import Button from "./components/Button";
 import TravelOption from "./components/TravelOption";
 import Title from "./components/Title";
 import CalculateRoute from "./components/CalculateRoute";
-import { routeInit, distanceInit } from "./utils/initialStates/initialState";
+import { routeInit, distanceInit, durationInit } from "./utils/initialStates/initialState";
 import { useState } from "react";
 import { distanceType, RouteState } from "./utils/types/types";
 import { MapSchemaFormValues, mapSchema } from "./utils/zod/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { getCoordsForAddress } from "./utils/helperFunctions/helperFunctions";
 import Loading from "./components/Loading";
 import {
   useJsApiLoader,
@@ -28,7 +27,7 @@ function App() {
   const [route, setRoute] = useState<RouteState>(routeInit);
   const [travelMode, setTravelMode] = useState<string>("DRIVING");
   const [distance, setDistance] = useState<distanceType>(distanceInit);
-  const [duration, setDuration] = useState<string>("");
+  const [duration, setDuration] = useState(durationInit);
 
   const form = useForm<MapSchemaFormValues>({
     defaultValues: {

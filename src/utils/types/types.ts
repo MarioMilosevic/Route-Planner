@@ -61,18 +61,21 @@ export type TravelModeProps = {
 
 export type InformationProps = {
   title: string;
-  stats: string;
+  stats: {
+    totalDistance: string;
+    distanceUnit: string;
+  };
 };
 
 export type FetchWaypointElements = {
   location: {
     lat: number;
     lng: number;
-  },
+  };
   stopover: boolean;
-}
+};
 
 export type distanceType = {
   distance: number;
-  unit:string
-}
+  unit: string;
+};

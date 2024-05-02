@@ -76,53 +76,97 @@ export const calculateDistance = (arr) => {
       };
     },
     { totalDistance: 0, distanceUnit: "" }
-  ); // Adding initial object for the accumulator
-
-  // Apply toFixed(1) to totalDistance
+  );
   result.totalDistance = result.totalDistance.toFixed(1);
-
   return result;
+};
+
+const tripsDuration = [
+  {
+    duration: {
+      text: "29 mins",
+    },
+  },
+  {
+    duration: {
+      text: "1 hour 7 mins",
+    },
+  },
+  {
+    duration: {
+      text: "15 hours 20 mins",
+    },
+  },
+];
+
+// const splitDurations = tripsDuration.map((trip) =>
+//   trip.duration.text.split(" ")
+// );
+// console.log(splitDurations)
+
+// const information = splitDurations.map((el) => {
+//   let [hourValue, minutesValue] = el.length > 2 ? [el[0], el[2]] : [0, el[0]];
+//   return { hourValue, minutesValue };
+// });
+
+// const totalInformation = information.reduce(
+//   (acc, curr) => {
+//     acc.totalHours += parseInt(curr.hourValue, 10);
+//     acc.totalMinutes += parseInt(curr.minutesValue, 10);
+//     return acc;
+//   },
+//   { totalHours: 0, totalMinutes: 0 }
+// );
+
+// // If the total minutes exceed 60
+// if (totalInformation.totalMinutes >= 60) {
+//   // Divide minutes by 60 and add the result to hours
+//   totalInformation.totalHours += Math.floor(totalInformation.totalMinutes / 60);
+//   // Update total minutes with the remainder after division
+//   totalInformation.totalMinutes %= 60;
+// }
+
+// console.log(totalInformation);
+
+export const calculateDuration = (arr) => {
+  const totalInformation = arr
+    .map((trip) => trip.duration.text.split(" "))
+    .reduce(
+      (acc, el) => {
+        const [hours, minutes] =
+          el.length > 2
+            ? [parseInt(el[0], 10), parseInt(el[2], 10)]
+            : [0, parseInt(el[0], 10)];
+        acc.totalHours += hours;
+        acc.totalMinutes += minutes;
+        return acc;
+      },
+      { totalHours: 0, totalMinutes: 0 }
+    );
+
+  totalInformation.totalHours += Math.floor(totalInformation.totalMinutes / 60);
+  totalInformation.totalMinutes %= 60;
+
+  return totalInformation; // Returning the calculated total information
 };
 
 
 
-// const updatedArr = legs.map((leg) => {
-//   const distanceText = leg.distance.text;
-//   const [distanceValue, distanceUnit] = distanceText.split(" ");
-//   return {
-//     distance: {
-//       value: parseFloat(distanceValue),
-//       unit: distanceUnit,
-//     },
-//   };
-// });
+// console.log("odje gledam",mario);
 
-// const totalDistance = updatedArr.reduce((total, leg) => {
-//   const { value, unit } = leg.distance;
-//   return total + value;
-// }, 0);
+// const getTotalMinutes = (trips) => {
+//   return trips.reduce((total, trip) => {
+//     const text = trip.duration.text;
+//     if (text.includes("hour")) {
+//       const [hours, minutes] = text.split(" ");
+//       console.log(hours)
+//       console.log(minutes)
+//       return total + parseInt(hours) * 60 + parseInt(minutes);
+//     } else {
+//       return total + parseInt(text);
+//     }
+//   }, 0);
+// };
 
-// console.log(totalDistance);
-
-// const trips = [
-//   {
-//     duration: {
-//       text: "29 mins",
-//     },
-//   },
-//   {
-//     duration: {
-//       text: "1 hour 7 mins",
-//     },
-//   },
-//   {
-//     duration: {
-//       text: "15 hours 20 mins",
-//     },
-//   },
-// ];
-
-// const totalDuration = trips.r(
-//   (acc, curr) => acc + parseFloat(curr.duration.text),
-//   0
-// );
+// const totalMinutes = getTotalMinutes(tripsDuration);
+// console.log("Total Duration in Minutes:", totalMinutes);

@@ -8,6 +8,10 @@ export const distanceInit = {
   unit: "",
 };
 
+export const durationInit = {
+  
+}
+
 export const routeInit = {
   startingPoint: "",
   waypoints: [],
