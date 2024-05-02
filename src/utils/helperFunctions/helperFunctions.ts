@@ -1,6 +1,5 @@
 import axios from "axios";
 import { RouteState, FetchWaypointElements } from "../types/types";
-import { distanceInit } from "../initialStates/initialState";
 
 export const calculateRouteFn = async (
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -24,7 +23,6 @@ export const calculateRouteFn = async (
         ? google.maps.TravelMode.DRIVING
         : google.maps.TravelMode.WALKING,
   });
-  console.log(results);
   return results;
 };
 
@@ -46,24 +44,6 @@ export async function getCoordsForAddress(address: string) {
   return coordinates;
 }
 
-const legs = [
-  {
-    distance: {
-      text: "61.7 mi",
-    },
-  },
-  {
-    distance: {
-      text: "63.0 mi",
-    },
-  },
-  {
-    distance: {
-      text: "1.7 mi",
-    },
-  },
-];
-
 export const calculateDistance = (arr) => {
   const result = arr.reduce(
     (acc, curr) => {
@@ -80,53 +60,6 @@ export const calculateDistance = (arr) => {
   result.totalDistance = result.totalDistance.toFixed(1);
   return result;
 };
-
-const tripsDuration = [
-  {
-    duration: {
-      text: "29 mins",
-    },
-  },
-  {
-    duration: {
-      text: "1 hour 7 mins",
-    },
-  },
-  {
-    duration: {
-      text: "15 hours 20 mins",
-    },
-  },
-];
-
-// const splitDurations = tripsDuration.map((trip) =>
-//   trip.duration.text.split(" ")
-// );
-// console.log(splitDurations)
-
-// const information = splitDurations.map((el) => {
-//   let [hourValue, minutesValue] = el.length > 2 ? [el[0], el[2]] : [0, el[0]];
-//   return { hourValue, minutesValue };
-// });
-
-// const totalInformation = information.reduce(
-//   (acc, curr) => {
-//     acc.totalHours += parseInt(curr.hourValue, 10);
-//     acc.totalMinutes += parseInt(curr.minutesValue, 10);
-//     return acc;
-//   },
-//   { totalHours: 0, totalMinutes: 0 }
-// );
-
-// // If the total minutes exceed 60
-// if (totalInformation.totalMinutes >= 60) {
-//   // Divide minutes by 60 and add the result to hours
-//   totalInformation.totalHours += Math.floor(totalInformation.totalMinutes / 60);
-//   // Update total minutes with the remainder after division
-//   totalInformation.totalMinutes %= 60;
-// }
-
-// console.log(totalInformation);
 
 export const calculateDuration = (arr) => {
   const totalInformation = arr
@@ -147,7 +80,7 @@ export const calculateDuration = (arr) => {
   totalInformation.totalHours += Math.floor(totalInformation.totalMinutes / 60);
   totalInformation.totalMinutes %= 60;
 
-  return totalInformation; // Returning the calculated total information
+  return totalInformation;
 };
 
 

@@ -21,7 +21,6 @@ const Input = ({
 
 
   const update = (value: string) => {
-  console.log('uslo')
   setRoute((prev) => ({
     ...prev,
     startingPoint: text === "Starting point" ? value : prev.startingPoint,

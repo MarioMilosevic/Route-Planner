@@ -9,7 +9,8 @@ export const distanceInit = {
 };
 
 export const durationInit = {
-  
+  totalHours: 0,
+  totalMinutes: 0,
 }
 
 export const routeInit = {

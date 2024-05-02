@@ -3,9 +3,13 @@ import Button from "./components/Button";
 import TravelOption from "./components/TravelOption";
 import Title from "./components/Title";
 import CalculateRoute from "./components/CalculateRoute";
-import { routeInit, distanceInit, durationInit } from "./utils/initialStates/initialState";
+import {
+  routeInit,
+  distanceInit,
+  durationInit,
+} from "./utils/initialStates/initialState";
 import { useState } from "react";
-import { distanceType, RouteState } from "./utils/types/types";
+import { distanceType, RouteState, durationType } from "./utils/types/types";
 import { MapSchemaFormValues, mapSchema } from "./utils/zod/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Loading from "./components/Loading";
@@ -27,7 +31,7 @@ function App() {
   const [route, setRoute] = useState<RouteState>(routeInit);
   const [travelMode, setTravelMode] = useState<string>("DRIVING");
   const [distance, setDistance] = useState<distanceType>(distanceInit);
-  const [duration, setDuration] = useState(durationInit);
+  const [duration, setDuration] = useState<durationType>(durationInit);
 
   const form = useForm<MapSchemaFormValues>({
     defaultValues: {
@@ -57,14 +61,14 @@ function App() {
     });
   };
 
-  // const getInputId = (id: string) => {
-  //   setInputId(id);
-  // };
   const onSubmit = (e, data) => {
     e.preventDefault();
     console.log(data);
   };
   if (!isLoaded) return <Loading />;
+  console.log("vrijeme", duration);
+  console.log("distanca",distance)
+  console.log("unit", distance.unit);
   return (
     <>
       <div className="grid grid-cols-[450px,1fr]">
@@ -99,7 +103,7 @@ function App() {
               setDistance={setDistance}
             />
           </form>
-          {duration && distance && (
+          {distance.distanceUnit && (
             <div className="w-full px-2 flex justify-between border rounded-lg bg-stone-200 text-stone-800">
               <Information stats={duration} title="Duration" />
               <Information stats={distance} title="Distance" />

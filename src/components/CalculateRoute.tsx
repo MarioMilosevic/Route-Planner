@@ -6,7 +6,7 @@ import {
   calculateDuration
 } from "../utils/helperFunctions/helperFunctions";
 import { CalculateRouteProps } from "../utils/types/types";
-import { routeInit } from "../utils/initialStates/initialState";
+import { routeInit, durationInit, distanceInit } from "../utils/initialStates/initialState";
 
 const CalculateRoute = ({
   travelMode,
@@ -18,7 +18,6 @@ const CalculateRoute = ({
   setDirections,
 }: CalculateRouteProps) => {
   const { waypoints } = route;
-  console.log(waypoints);
 
   const calculateRouteHandler = async (e, arr) => {
     try {
@@ -28,12 +27,9 @@ const CalculateRoute = ({
         return { location, stopover };
       });
       const coordinates = await Promise.all(promises);
-      console.log(coordinates);
       const result = await calculateRouteFn(e, route, travelMode, coordinates);
       if (result) {
-        console.log(result);
         const trips = result.routes[0].legs;
-        console.log(trips);
         setDistance(calculateDistance(trips));
         setDuration(calculateDuration(trips))
         setDirections(result);
@@ -45,8 +41,8 @@ const CalculateRoute = ({
 
   const resetRoute = () => {
     setRoute(routeInit);
-    setDistance("");
-    setDuration("");
+    setDistance(distanceInit);
+    setDuration(durationInit);
     updatePosition();
   };
 

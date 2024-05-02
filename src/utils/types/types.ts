@@ -62,8 +62,10 @@ export type TravelModeProps = {
 export type InformationProps = {
   title: string;
   stats: {
-    totalDistance: string;
-    distanceUnit: string;
+    totalDistance?: string;
+    distanceUnit?: string;
+    totalHours?: number;
+    totalMinutes?:number
   };
 };
 
@@ -76,6 +78,11 @@ export type FetchWaypointElements = {
 };
 
 export type distanceType = {
-  distance: number;
-  unit: string;
+  totalDistance: number;
+  distanceUnit: string;
+};
+
+export type durationType = {
+  totalHours: number;
+  totalMinutes: number;
 };
