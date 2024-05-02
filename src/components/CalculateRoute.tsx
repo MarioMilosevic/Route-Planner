@@ -1,8 +1,11 @@
 import Button from "./Button";
-import { calculateRouteFn } from "../utils/helperFunctions/helperFunctions";
+import {
+  calculateRouteFn,
+  getCoordsForAddress,
+  calculateDistance,
+} from "../utils/helperFunctions/helperFunctions";
 import { CalculateRouteProps } from "../utils/types/types";
 import { routeInit } from "../utils/initialStates/initialState";
-import { getCoordsForAddress } from "../utils/helperFunctions/helperFunctions";
 
 const CalculateRoute = ({
   travelMode,
@@ -27,10 +30,26 @@ const CalculateRoute = ({
       console.log(coordinates);
       const result = await calculateRouteFn(e, route, travelMode, coordinates);
       if (result) {
-        const duration = result?.routes[0].legs[0].duration?.text;
-        const distance = result?.routes[0].legs[0].distance?.text;
-        setDuration(duration ?? "");
-        setDistance(distance ?? "");
+        console.log(result);
+        const trips = result.routes[0].legs;
+        console.log(trips);
+        const { totalDistance, distanceUnit } = calculateDistance(trips);
+        setDistance(calculateDistance(trips))
+        console.log(totalDistance)
+        console.log(distanceUnit)
+        // const duration = result?.routes[0].legs[0].duration?.text;
+        // console.log(duration)
+        // duration should be result?.routes[0].legs[0].reduce(reduce logic to add duration?.text)
+        // const totalKilometres = trips.reduce(
+        //   (acc, curr) => acc + parseFloat(curr.distance.text),
+        //   0
+        // );
+        // const totalDuration = trips.reduce((acc, curr) => acc + parseFloat(curr.duration.text), 0)
+        // console.log(totalDuration)
+        // console.log(totalKilometres)
+        // const distance = result?.routes[0].legs[0].distance?.text;
+        // setDuration(duration ?? "");
+        // setDistance(distance ?? "");
         setDirections(result);
       }
     } catch (error) {

@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 export type InputComponentProps = {
+  id: string;
   text: string;
   route: RouteState;
   setRoute: Dispatch<SetStateAction<RouteState>>;
@@ -62,3 +63,16 @@ export type InformationProps = {
   title: string;
   stats: string;
 };
+
+export type FetchWaypointElements = {
+  location: {
+    lat: number;
+    lng: number;
+  },
+  stopover: boolean;
+}
+
+export type distanceType = {
+  distance: number;
+  unit:string
+}

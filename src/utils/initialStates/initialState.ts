@@ -3,10 +3,10 @@ export const currentPositionInit = {
   lng: 0,
 };
 
-// export const directionsInit = {
-//   directions: null,
-// };
-
+export const distanceInit = {
+  distance: 0,
+  unit: "",
+};
 
 export const routeInit = {
   startingPoint: "",
@@ -14,4 +14,4 @@ export const routeInit = {
   endPoint: "",
 };
 
-export const TravelModeState = ""
+export const TravelModeState = "";

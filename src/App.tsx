@@ -3,9 +3,9 @@ import Button from "./components/Button";
 import TravelOption from "./components/TravelOption";
 import Title from "./components/Title";
 import CalculateRoute from "./components/CalculateRoute";
-import { routeInit } from "./utils/initialStates/initialState";
+import { routeInit, distanceInit } from "./utils/initialStates/initialState";
 import { useState } from "react";
-import { RouteState } from "./utils/types/types";
+import { distanceType, RouteState } from "./utils/types/types";
 import { MapSchemaFormValues, mapSchema } from "./utils/zod/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getCoordsForAddress } from "./utils/helperFunctions/helperFunctions";
@@ -27,7 +27,7 @@ function App() {
   const [directions, setDirections] = useState<google.maps.DirectionsResult>();
   const [route, setRoute] = useState<RouteState>(routeInit);
   const [travelMode, setTravelMode] = useState<string>("DRIVING");
-  const [distance, setDistance] = useState<string>("");
+  const [distance, setDistance] = useState<distanceType>(distanceInit);
   const [duration, setDuration] = useState<string>("");
 
   const form = useForm<MapSchemaFormValues>({
@@ -48,7 +48,11 @@ function App() {
   });
 
   const addWaypoint = () => {
-    const waypoint = { placeId: crypto.randomUUID(), location:"", stopover:true };
+    const waypoint = {
+      placeId: crypto.randomUUID(),
+      location: "",
+      stopover: true,
+    };
     setRoute((prev) => {
       return { ...prev, waypoints: [...prev.waypoints, waypoint] };
     });
@@ -68,25 +72,17 @@ function App() {
         <aside className="bg-black flex flex-col items-center max-h-screen p-4 text-green-50">
           <Title />
           <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              route={route}
-              setRoute={setRoute}
-              text="Starting point"
-            />
+            <Input route={route} setRoute={setRoute} text="Starting point" />
             {route.waypoints.map((waypoint) => (
               <Input
                 key={waypoint.placeId}
-                id={ waypoint.placeId}
+                id={waypoint.placeId}
                 route={route}
                 setRoute={setRoute}
                 text="Waypoint"
               />
             ))}
-            <Input
-              route={route}
-              setRoute={setRoute}
-              text="Destination"
-            />
+            <Input route={route} setRoute={setRoute} text="Destination" />
             <Button scale="big" text="Add stop" clickHandler={addWaypoint} />
             <TravelOption
               travelMode={travelMode}
@@ -131,4 +127,4 @@ function App() {
 export default App;
 
 // ubacim u array [{location:Cetinje, Montenegro}, {location:Kotor, Montenegro}]
-// forEach(location => da ih ubacim u waypoints array ili neki drugi, te koordinate i onda to proslijedim u onaj fetch) 
+// forEach(location => da ih ubacim u waypoints array ili neki drugi, te koordinate i onda to proslijedim u onaj fetch)

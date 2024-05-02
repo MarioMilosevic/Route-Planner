@@ -11,7 +11,7 @@ const Input = ({
   const [searchResult, setSearchResult] =
     useState<google.maps.places.Autocomplete>();
   const { startingPoint, waypoints, endPoint } = route;
-  const [selectedId, setSelectedId] = useState("");
+  // const [selectedId, setSelectedId] = useState("");
   const inputRoute =
     text === "Starting point"
       ? startingPoint
@@ -41,15 +41,7 @@ const Input = ({
     setSearchResult(autocomplete);
   }
 
-  // const updateEducation = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { value, name, id } = e.target;
-  //   setUser((prev) => ({
-  //     ...prev,
-  //     education: prev.education.map((edu) =>
-  //       edu.id === id ? { ...edu, [name]: value } : edu
-  //     ),
-  //   }));
-  // };
+
 
   function locationSelected() {
     if (searchResult) {
@@ -60,7 +52,7 @@ const Input = ({
       }
     }
   }
-  console.log("svi waypointi u INPUTU", waypoints)
+  // console.log("svi waypointi u INPUTU", waypoints)
   return (
     <Autocomplete onLoad={onLoad} onPlaceChanged={locationSelected}>
       <input

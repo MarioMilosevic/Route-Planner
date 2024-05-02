@@ -1,11 +1,12 @@
 import axios from "axios";
-import { RouteState } from "../types/types";
+import { RouteState, FetchWaypointElements } from "../types/types";
+import { distanceInit } from "../initialStates/initialState";
 
 export const calculateRouteFn = async (
   e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   route: RouteState,
   travelMode: string,
-  waypoints
+  waypoints: FetchWaypointElements[]
 ) => {
   e.preventDefault();
   const { startingPoint, endPoint } = route;
@@ -44,3 +45,84 @@ export async function getCoordsForAddress(address: string) {
   console.log(coordinates);
   return coordinates;
 }
+
+const legs = [
+  {
+    distance: {
+      text: "61.7 mi",
+    },
+  },
+  {
+    distance: {
+      text: "63.0 mi",
+    },
+  },
+  {
+    distance: {
+      text: "1.7 mi",
+    },
+  },
+];
+
+export const calculateDistance = (arr) => {
+  const result = arr.reduce(
+    (acc, curr) => {
+      const distanceText = curr.distance.text;
+      const [distanceValue, distanceUnit] = distanceText.split(" ");
+      const distance = parseFloat(distanceValue);
+      return {
+        totalDistance: acc.totalDistance + distance,
+        distanceUnit,
+      };
+    },
+    { totalDistance: 0, distanceUnit: "" }
+  ); // Adding initial object for the accumulator
+
+  // Apply toFixed(1) to totalDistance
+  result.totalDistance = result.totalDistance.toFixed(1);
+
+  return result;
+};
+
+
+
+// const updatedArr = legs.map((leg) => {
+//   const distanceText = leg.distance.text;
+//   const [distanceValue, distanceUnit] = distanceText.split(" ");
+//   return {
+//     distance: {
+//       value: parseFloat(distanceValue),
+//       unit: distanceUnit,
+//     },
+//   };
+// });
+
+// const totalDistance = updatedArr.reduce((total, leg) => {
+//   const { value, unit } = leg.distance;
+//   return total + value;
+// }, 0);
+
+// console.log(totalDistance);
+
+// const trips = [
+//   {
+//     duration: {
+//       text: "29 mins",
+//     },
+//   },
+//   {
+//     duration: {
+//       text: "1 hour 7 mins",
+//     },
+//   },
+//   {
+//     duration: {
+//       text: "15 hours 20 mins",
+//     },
+//   },
+// ];
+
+// const totalDuration = trips.r(
+//   (acc, curr) => acc + parseFloat(curr.duration.text),
+//   0
+// );
