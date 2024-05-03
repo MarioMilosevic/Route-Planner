@@ -27,6 +27,7 @@ const CalculateRoute = ({
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     arr:destination[]
   ) => {
+    e.preventDefault()
     try {
       const promises = arr.map(async (element) => {
         const stopover = true;
@@ -46,10 +47,12 @@ const CalculateRoute = ({
     }
   };
 
-  const resetRoute = () => {
+  const resetRoute = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
     setRoute(routeInit);
     setDistance(distanceInit);
     setDuration(durationInit);
+    setDirections(undefined)
     updatePosition();
   };
 
@@ -70,7 +73,7 @@ const CalculateRoute = ({
         isActive={isActive}
         scale="medium"
         text="Reset"
-        clickHandler={resetRoute}
+        clickHandler={(e) =>resetRoute(e)}
       />
     </div>
   );

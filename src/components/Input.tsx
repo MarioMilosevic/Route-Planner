@@ -51,7 +51,6 @@ const Input = ({
       }
     }
   }
-  // console.log("svi waypointi u INPUTU", waypoints)
   return (
     <Autocomplete onLoad={onLoad} onPlaceChanged={locationSelected}>
       <input

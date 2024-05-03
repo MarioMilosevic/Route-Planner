@@ -48,7 +48,8 @@ function App() {
     libraries,
   });
 
-  const addWaypoint = () => {
+  const addWaypoint = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
     const waypoint = {
       placeId: crypto.randomUUID(),
       location: "",
@@ -79,7 +80,7 @@ function App() {
               />
             ))}
             <Input id="" route={route} setRoute={setRoute} text="Destination" />
-            <Button isActive="" scale="big" text="Add stop" clickHandler={addWaypoint} />
+            <Button isActive="" scale="big" text="Add stop" clickHandler={(e) => addWaypoint(e)} />
             <TravelOption
               travelMode={travelMode}
               setTravelMode={setTravelMode}
