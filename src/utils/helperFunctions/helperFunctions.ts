@@ -12,7 +12,6 @@ export const calculateRouteFn = async (
   if (startingPoint === "" || endPoint === "") {
     return;
   }
-  console.log("ovo saljem", waypoints);
   const directionsService = new google.maps.DirectionsService();
   const results = await directionsService.route({
     origin: startingPoint,
@@ -37,26 +36,31 @@ export async function getCoordsForAddress(address: string) {
   return coordinates;
 }
 
-export const calculateDistance = (arr) => {
+export const calculateDistance = (arr: google.maps.DirectionsLeg[]) => {
   const result = arr.reduce(
     (acc, curr) => {
-      const distanceText = curr.distance.text;
-      const [distanceValue, distanceUnit] = distanceText.split(" ");
-      const distance = parseFloat(distanceValue);
-      return {
-        totalDistance: acc.totalDistance + distance,
-        distanceUnit,
-      };
+      const distanceText = curr.distance?.text;
+      if (distanceText) {
+        const [distanceValue, distanceUnit] = distanceText.split(" ");
+        const distance = parseFloat(distanceValue);
+        return {
+          totalDistance: acc.totalDistance + distance,
+          distanceUnit,
+        };
+      } else {
+        return acc;
+      }
     },
     { totalDistance: 0, distanceUnit: "" }
   );
-  result.totalDistance = result.totalDistance.toFixed(1);
+  result.totalDistance = parseFloat(result.totalDistance.toFixed(1));
   return result;
 };
 
-export const calculateDuration = (arr) => {
+export const calculateDuration = (arr: google.maps.DirectionsLeg[]) => {
   const totalInformation = arr
-    .map((trip) => trip.duration.text.split(" "))
+    .map((trip) => trip.duration?.text.split(" "))
+    .filter((el): el is string[] => el !== undefined)
     .reduce(
       (acc, el) => {
         const [hours, minutes] =

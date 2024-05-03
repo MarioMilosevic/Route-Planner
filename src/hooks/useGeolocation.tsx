@@ -13,7 +13,7 @@ const useGeolocation = () => {
         setCurrentPosition({ lat: latitude, lng: longitude });
       });
     } else {
-      console.log("Geolocation is not available in your browser");
+      console.error("Geolocation is not available in your browser");
     }
   };
 
@@ -30,16 +30,3 @@ const useGeolocation = () => {
 
 export default useGeolocation;
 
-// useEffect(() => {
-//   if ("geolocation" in navigator) {
-//     navigator.geolocation.getCurrentPosition(function (position) {
-//       const { latitude, longitude } = position.coords;
-//       setCurrentPosition({
-//         lat: latitude,
-//         lng: longitude,
-//       });
-//     });
-//   } else {
-//     console.log("Geolocation is not available in your browser.");
-//   }
-// }, []);

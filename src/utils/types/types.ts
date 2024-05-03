@@ -27,6 +27,7 @@ export type CoordinatesType = {
 
 export type directionsResultType = google.maps.DirectionsResult;
 
+
 export type destination = {
   placeId: string;
   location: string;
@@ -80,6 +81,8 @@ export type InformationProps = {
     totalMinutes?: number;
   };
 };
+
+
 
 
 export type distanceType = {

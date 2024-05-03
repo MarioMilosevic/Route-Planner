@@ -10,8 +10,6 @@ import {
 } from "./utils/initialStates/initialState";
 import { useState } from "react";
 import { distanceType, RouteState, durationType } from "./utils/types/types";
-// import { MapSchemaFormValues, mapSchema } from "./utils/zod/zod";
-// import { zodResolver } from "@hookform/resolvers/zod";
 import Loading from "./components/Loading";
 import {
   useJsApiLoader,
@@ -21,7 +19,6 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import useGeolocation from "./hooks/useGeolocation";
-// import { useForm } from "react-hook-form";
 import Information from "./components/Information";
 
 const libraries: Libraries = ["places"];
@@ -33,13 +30,6 @@ function App() {
   const [distance, setDistance] = useState<distanceType>(distanceInit);
   const [duration, setDuration] = useState<durationType>(durationInit);
 
-  // const form = useForm<MapSchemaFormValues>({
-  //   defaultValues: {
-  //     startingPoint: "",
-  //     endPoint: "",
-  //   },
-  //   resolver: zodResolver(mapSchema),
-  // });
   const { currentPosition, setCurrentPosition, updatePosition } =
     useGeolocation();
 
@@ -60,16 +50,20 @@ function App() {
     });
   };
 
-
   if (!isLoaded) return <Loading />;
- 
+
   return (
     <>
       <div className="grid grid-cols-[450px,1fr]">
         <aside className="bg-black flex flex-col items-center max-h-screen p-4 text-green-50">
           <Title />
           <form className="w-full">
-            <Input id="" route={route} setRoute={setRoute} text="Starting point" />
+            <Input
+              id=""
+              route={route}
+              setRoute={setRoute}
+              text="Starting point"
+            />
             {route.waypoints.map((waypoint) => (
               <Input
                 key={waypoint.placeId}
@@ -80,7 +74,12 @@ function App() {
               />
             ))}
             <Input id="" route={route} setRoute={setRoute} text="Destination" />
-            <Button isActive="" scale="big" text="Add stop" clickHandler={(e) => addWaypoint(e)} />
+            <Button
+              isActive=""
+              scale="big"
+              text="Add stop"
+              clickHandler={(e) => addWaypoint(e)}
+            />
             <TravelOption
               travelMode={travelMode}
               setTravelMode={setTravelMode}
@@ -121,4 +120,3 @@ function App() {
 }
 
 export default App;
-

@@ -11,10 +11,9 @@ const Input = ({ id, text, route, setRoute }: InputComponentProps) => {
       ? startingPoint
       : text === "Destination"
       ? endPoint
-      : "";
+      : undefined;
 
   const isRemovable = text === "Waypoint" ? true : false;
-
   const update = (value: string) => {
     setRoute((prev) => ({
       ...prev,
